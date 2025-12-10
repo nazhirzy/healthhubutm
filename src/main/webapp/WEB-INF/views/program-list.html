@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Program List</title>
+</head>
+<body>
+    <h1>All Programs</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="program : ${programs}">
+                <td th:text="${program.id}">1</td>
+                <td th:text="${program.name}">Sample Name</td>
+                <td><a th:href="@{/program/find(id=${program.id})}">Details</a></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
