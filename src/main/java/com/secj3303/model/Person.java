@@ -2,19 +2,41 @@ package com.secj3303.model;
 
 import java.time.Year;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "person")
 public class Person {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
     private int yob;
-    private double weight, height;
 
-    public Person(){
+    @Column(nullable = false)
+    private double weight;
 
-    }
+    @Column(nullable = false)
+    private double height;
 
-    public Person(int id, String name, int yob, double weight, double height){
+    public Person(){}
+
+    public Person(int id, String name, String password, int yob, double weight, double height){
         this.id = id;
         this.name = name;
+        this.password = password;
         this.yob = yob;
         this.weight = weight;
         this.height = height;
@@ -26,6 +48,10 @@ public class Person {
 
     public String getName() {
         return name;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public double getHeight() {
@@ -72,6 +98,10 @@ public class Person {
 
  public void setName(String name) {
      this.name = name;
+ }
+
+ public void setPassword(String password) {
+     this.password = password;
  }
 
  public void setWeight(double weight) {
