@@ -21,6 +21,10 @@ public class PersonDaoHibernate implements PersonDao {
     @Autowired
     private org.hibernate.SessionFactory sessionFactory;
 
+    @Autowired
+    private EnrollmentDaoHibernate eDao; 
+
+
     private Session openSession() {
         return sessionFactory.openSession();
     }
@@ -47,6 +51,13 @@ public class PersonDaoHibernate implements PersonDao {
         return query.getResultList();
     }
 
+    @Override
+    public List<Person> findAllUsers(){
+        Query<Person> query = openSession().createQuery(
+            "from Person p", Person.class);
+        return query.getResultList();
+    }
+
 
     @Override
     public void save(Person person){
@@ -63,13 +74,35 @@ public class PersonDaoHibernate implements PersonDao {
     }
 
     @Override
-    public void delete(int id) {
-	
-        Session session = openSession();
+public void delete(int id) {
+    eDao.deleteEnrollmentsByMemberId(id);
+    
+    Session session = openSession();
+    session.beginTransaction();
+    
+    try {
+        // 2. Retrieve and delete the main Person record.
         Person personToDelete = session.get(Person.class, id);
-        if(personToDelete != null)
-        session.delete(personToDelete);
+        
+        if (personToDelete != null) {
+            session.delete(personToDelete);
+        }
+        
+        session.getTransaction().commit();
+        
+    } catch (Exception e) {
+        if (session.getTransaction() != null) {
+            session.getTransaction().rollback();
+        }
+        System.err.println("Final person delete failed for ID " + id);
+        e.printStackTrace();
+        
+    } finally {
+        if (session != null && session.isOpen()) {
+            session.close();
+        }
     }
+}
 
     @Override
     public Person findByUsername(String name){
