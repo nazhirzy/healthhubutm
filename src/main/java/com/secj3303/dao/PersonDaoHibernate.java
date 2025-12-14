@@ -71,4 +71,16 @@ public class PersonDaoHibernate implements PersonDao {
         session.delete(personToDelete);
     }
 
+    @Override
+    public Person findByUsername(String name){
+        Session session = openSession();
+
+        return session.createQuery(
+                        "FROM Person WHERE name = :name",
+                        Person.class
+                )
+                .setParameter("name", name)
+                .uniqueResult();
+    }
+
 }

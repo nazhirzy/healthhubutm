@@ -35,7 +35,7 @@ public class Person {
         this.name = name;
         this.password = password;
         this.yob = yob;
-        this.role = role;
+
     }
 
     public int getId() {
@@ -80,6 +80,10 @@ public class Person {
 
  public String getRole() {
      return role;
+ }
+
+ public void setRole(String role) {
+     this.role = role;
  }
 }
 

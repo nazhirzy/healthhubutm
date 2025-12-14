@@ -33,11 +33,11 @@ public class LoginController {
             return "login";
         }
 
-        if (p.getRole() == "member || Member") {
+        if (p.getRole().equals("member")) {
             role = "member";
-        } else if (p.getRole() == "trainer || Trainer") {
+        } else if (p.getRole().equals("trainer")) {
             role = "trainer";
-        } else if (p.getRole() == "admin || Admin") {
+        } else if (p.getRole().equals("admin")) {
             role = "admin";
         }
 
@@ -60,15 +60,6 @@ public class LoginController {
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/login";
-    }
-
-    @GetMapping("/test/create-members")
-    @ResponseBody
-    public String createTestMembers() {
-    pDao.save(new Person(1, "member3", "123", 2002, 60, 160));
-    pDao.save(new Person(2, "trainer2", "123", 1994, 78, 178));
-    pDao.save(new Person(3, "admin2", "123", 1988, 82, 182));
-    return "Test users created";
     }
 
 }

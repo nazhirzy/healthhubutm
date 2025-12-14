@@ -11,5 +11,5 @@ public interface PersonDao {
     Person findByUsernameAndPassword(String username, String password);		
     void save(Person person);
     void delete(int id);
-    List<Person> findAll();
+    Person findByUsername(String username);
 }
