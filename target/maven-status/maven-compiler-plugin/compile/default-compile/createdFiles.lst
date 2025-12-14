@@ -1,7 +1,10 @@
+com\secj3303\model\Bmi.class
+com\secj3303\dao\BmiDao.class
 com\secj3303\dao\ProgramDaoHibernate.class
 com\secj3303\dao\EnrollmentDao.class
 com\secj3303\dao\ProgramDao.class
 com\secj3303\dao\PersonDao.class
+com\secj3303\dao\BmiDaoHibernate.class
 com\secj3303\model\Program.class
 com\secj3303\controller\BmiController.class
 com\secj3303\model\Enrollment.class
