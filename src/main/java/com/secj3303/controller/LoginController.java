@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.secj3303.dao.PersonDaoHibernate;
 import com.secj3303.model.Person;
@@ -23,34 +24,51 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String pass, HttpSession session, Model model){
+    public String login(@RequestParam String name, @RequestParam String password, HttpSession session, Model model){
         String role = null;
-        Person p = pDao.findByUsernameAndPassword(username, pass);
+        Person p = pDao.findByUsernameAndPassword(name, password);
 
         if (p == null) {
             model.addAttribute("error", "Invalid login");
             return "login";
         }
 
-        if (username.contains("member")) {
+        if (name.contains("member")) {
             role = "member";
-        } else if (username.contains("trainer")) {
+        } else if (name.contains("trainer")) {
             role = "trainer";
-        } else if (username.contains("admin")) {
+        } else if (name.contains("admin")) {
             role = "admin";
         }
 
-        session.setAttribute("username", username);
+        session.setAttribute("name", name);
         session.setAttribute("role", role);
         session.setAttribute("id", p.getId());
 
-        return "home";
+        if (role.equals("member")) {
+            return "redirect:/member/dashboard";
+        } else if (role.equals("trainer")) {
+            return "redirect:/trainer/dashboard";
+        } else if (role.equals("admin")) {
+            return "redirect:/admin/dashboard";
+        }
+
+        return "redirect:/login";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/login";
+    }
+
+    @GetMapping("/test/create-members")
+    @ResponseBody
+    public String createTestMembers() {
+    pDao.save(new Person(1, "member3", "123", 2002, 60, 160));
+    pDao.save(new Person(2, "trainer2", "123", 1994, 78, 178));
+    pDao.save(new Person(3, "admin2", "123", 1988, 82, 182));
+    return "Test users created";
     }
 
 }

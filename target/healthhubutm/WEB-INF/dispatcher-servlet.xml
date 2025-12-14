@@ -45,9 +45,7 @@
   <property name="password" value="" />
 </bean>
 
-<bean id="personDaoJdbc" class="com.secj3303.dao.PersonDaoJdbc">
-    <constructor-arg ref="dataSource"/>
-</bean>
+
   <!-- ============================================================ -->
   <!-- 4. Configure static resource handling (CSS, JS, images, etc.) -->
   <!-- ============================================================ -->

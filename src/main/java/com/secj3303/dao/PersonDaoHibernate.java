@@ -17,7 +17,7 @@ public class PersonDaoHibernate implements PersonDao {
 
     @Override
     public Person findByUsernameAndPassword(String name, String password) {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = openSession();
         return session.createQuery(
                         "FROM Person WHERE name = :name AND password = :password",
                         Person.class
