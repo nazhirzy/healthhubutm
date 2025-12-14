@@ -33,11 +33,11 @@ public class LoginController {
             return "login";
         }
 
-        if (p.role == "member || Member") {
+        if (p.getRole() == "member || Member") {
             role = "member";
-        } else if (p.role == "trainer || Trainer") {
+        } else if (p.getRole() == "trainer || Trainer") {
             role = "trainer";
-        } else if (p.role == "admin || Admin") {
+        } else if (p.getRole() == "admin || Admin") {
             role = "admin";
         }
 

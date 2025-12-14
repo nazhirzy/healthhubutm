@@ -25,7 +25,7 @@ public class Person {
     @Column(nullable = false)
     private int yob;
 
-    @Colum(nullable = false)
+    @Column(nullable = false)
     private String role;
 
     public Person(){}
@@ -50,14 +50,6 @@ public class Person {
         return password;
     }
 
-    public double getHeight() {
-        return height;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
     public int getYob() {
         return yob;
     }
@@ -72,9 +64,6 @@ public class Person {
      this.id = id;
  }
 
- public void setHeight(double height) {
-     this.height = height;
- }
 
  public void setName(String name) {
      this.name = name;
@@ -84,13 +73,13 @@ public class Person {
      this.password = password;
  }
 
- public void setWeight(double weight) {
-     this.weight = weight;
- }
 
  public void setYob(int yob) {
      this.yob = yob;
  }
 
+ public String getRole() {
+     return role;
+ }
 }
 

@@ -14,7 +14,7 @@ import com.secj3303.dao.PersonDaoHibernate;
 import com.secj3303.model.Person;
 
 @Controller
-public class RegisterContrller{
+public class RegisterController{
     @Autowired
     private PersonDaoHibernate personDao;
 

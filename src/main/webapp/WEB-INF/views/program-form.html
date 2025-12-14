@@ -7,7 +7,7 @@
 
 <h2>Person Form</h2>
 
-<form th:action="@{/program/save}" th:object="${program}" method="post">
+<form th:action="@{/trainer/save}" th:object="${program}" method="post">
 
     <input type="hidden" th:field="*{id}" />
 
@@ -21,7 +21,7 @@
 </form>
 
 <br/>
-<a th:href="@{/person/list}">Back to list</a>
+<a th:href="@{/trainer/list}">Back to list</a>
 
 </body>
 </html>

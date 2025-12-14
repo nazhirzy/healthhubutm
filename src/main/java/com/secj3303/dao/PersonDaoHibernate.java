@@ -1,10 +1,13 @@
 package com.secj3303.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.secj3303.model.Person;
+import com.secj3303.model.Program;
 
 @Repository
 public class PersonDaoHibernate implements PersonDao {
@@ -49,4 +52,5 @@ public class PersonDaoHibernate implements PersonDao {
         if(personToDelete != null)
         session.delete(personToDelete);
     }
+
 }
