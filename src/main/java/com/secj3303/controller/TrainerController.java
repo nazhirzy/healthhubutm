@@ -1,15 +1,18 @@
 package com.secj3303.controller;
 
 
-import com.secj3303.dao.FitnessPlanDAO;
+import com.secj3303.dao.EnrollmentDaoHibernate;
 import com.secj3303.dao.PersonDao;
-import com.secj3303.model.FitnessPlan;
+import com.secj3303.dao.PersonDaoHibernate;
+import com.secj3303.dao.ProgramDaoHibernate;
+import com.secj3303.model.Enrollment;
 import com.secj3303.model.Person;
+import com.secj3303.model.Program;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -19,10 +22,14 @@ import java.util.List;
 public class TrainerController {
 
     @Autowired
-    private FitnessPlanDAO fitnessPlanDAO;
+    private ProgramDaoHibernate programDao;
 
     @Autowired
-    private PersonDao personDAO; 
+    private PersonDaoHibernate personDao;
+
+    @Autowired
+    private EnrollmentDaoHibernate eDao;
+
 
     private boolean isTrainer(HttpSession session) {
         String role = (String) session.getAttribute("role");
@@ -34,7 +41,7 @@ public class TrainerController {
         if (!isTrainer(session)) {
             return "redirect:/login";
         }
-        return "trainer/trainer-dashboard";
+        return "trainer-dashboard";
     }
 
 
@@ -42,75 +49,56 @@ public class TrainerController {
     public String listPlans(HttpSession session, Model model) {
         if (!isTrainer(session)) return "redirect:/login";
 
-        Person currentTrainer = (Person) session.getAttribute("loggedInUser");
-        if (currentTrainer == null) return "redirect:/login";
+        List<Program> plist = programDao.findAll();
+        model.addAttribute("programs", plist);
+        return "program-list";
+    }
+
+    @GetMapping("/add")
+    public String add(HttpSession session, Model model){
+        if (!isTrainer(session)) return "redirect:/login";
+        model.addAttribute("program", new Program());
+        return "program-form";
+    }
+
+    @PostMapping("/save")
+    public String save(@ModelAttribute("program") Program program){
+        programDao.save(program);
+        return "redirect:/program/getall";
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam int id){
+        programDao.delete(id);
+        return "redirect:/program/getall";
+    }
+
+
+    @GetMapping("/assign")
+    public String showAssignmentForm(Model model) {
+        List<Person> allMembers = personDao.findAllMembers(); 
+        List<Program> allPrograms = programDao.findAll(); 
+        model.addAttribute("allMembers", allMembers);
+        model.addAttribute("allPrograms", allPrograms);
+
+        return "assign-program";
+    }
+
+    @PostMapping("/assignProgram")
+    public String assignProgram(HttpSession session, @RequestParam int memberId, @RequestParam int programId) {
+        if (!isTrainer(session)) return "redirect:/login";
+
+        Program p = programDao.findById(programId);
+        Person m = personDao.findById(memberId);
         
-        List<FitnessPlan> plans = fitnessPlanDAO.findPlansByTrainerId(currentTrainer.getId());
-        model.addAttribute("plans", plans);
-        return "trainer/plan-list"; 
-    }
+        if (p == null || m == null) {
+            System.err.println("Error: Program or Member not found.");
+            return "redirect:/trainer/programs-list?error=notfound";
+        }
 
-    @GetMapping("/plans/showFormForAdd")
-    public String showFormForAdd(HttpSession session, Model model) {
-        if (!isTrainer(session)) return "redirect:/login";
+        Enrollment e = new Enrollment(m, p);
+        eDao.save(e);
 
-        model.addAttribute("plan", new FitnessPlan());
-        return "trainer/plan-form";
-    }
-
-    @GetMapping("/plans/showFormForUpdate")
-    public String showFormForUpdate(@RequestParam("planId") int id, HttpSession session, Model model) {
-        if (!isTrainer(session)) return "redirect:/login";
-
-        FitnessPlan plan = fitnessPlanDAO.findById(id);
-        model.addAttribute("plan", plan);
-        return "trainer/plan-form";
-    }
-
-    @PostMapping("/plans/save")
-    public String savePlan(@ModelAttribute("plan") FitnessPlan plan, HttpSession session, RedirectAttributes redirectAttributes) {
-        if (!isTrainer(session)) return "redirect:/login";
-
-        Person currentTrainer = (Person) session.getAttribute("loggedInUser");
-        if (currentTrainer == null) return "redirect:/login";
-
-        plan.setTrainer(currentTrainer); 
-        fitnessPlanDAO.save(plan);
-        redirectAttributes.addFlashAttribute("message", "Fitness Plan saved successfully!");
-        return "redirect:/trainer/plans";
-    }
-
-    @GetMapping("/plans/delete")
-    public String deletePlan(@RequestParam("planId") int id, HttpSession session, RedirectAttributes redirectAttributes) {
-        if (!isTrainer(session)) return "redirect:/login";
-
-        fitnessPlanDAO.delete(id);
-        redirectAttributes.addFlashAttribute("message", "Fitness Plan deleted successfully.");
-        return "redirect:/trainer/plans";
-    }
-
-    @GetMapping("/assign-plan")
-    public String showAssignPlanForm(HttpSession session, Model model) {
-        if (!isTrainer(session)) return "redirect:/login";
-
-        List<Person> members = personDAO.findAllMembers();
-
-        Person currentTrainer = (Person) session.getAttribute("loggedInUser");
-        List<FitnessPlan> plans = fitnessPlanDAO.findPlansByTrainerId(currentTrainer.getId()); 
-
-        model.addAttribute("members", members);
-        model.addAttribute("plans", plans);
-
-        return "trainer/assign-plan-form";
-    }
-
-    @PostMapping("/assign-plan")
-    public String assignPlan(@RequestParam("memberId") int memberId, 
-                             @RequestParam("planId") int planId, 
-                             RedirectAttributes redirectAttributes) {
-        
-
-        redirectAttributes.addFlashAttribute("message", "Plan assigned successfully!");
         return "redirect:/trainer/dashboard";
     }
 
