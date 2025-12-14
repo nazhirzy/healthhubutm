@@ -25,11 +25,8 @@ public class Person {
     @Column(nullable = false)
     private int yob;
 
-    @Column(nullable = false)
-    private double weight;
-
-    @Column(nullable = false)
-    private double height;
+    @Colum(nullable = false)
+    private String role;
 
     public Person(){}
 
@@ -38,8 +35,7 @@ public class Person {
         this.name = name;
         this.password = password;
         this.yob = yob;
-        this.weight = weight;
-        this.height = height;
+        this.role = role;
     }
 
     public int getId() {
@@ -71,22 +67,6 @@ public class Person {
         return year - yob;
     }
 
-    public double getBmi() {
-    double bmi = weight / (height * height);
-    return Math.round(bmi * 100.0) / 100.0;
-    }
-
-    public String getBmiCategory() {
-    double bmi = getBmi();
-    if (bmi < 18.5)
-        return "Underweight";
-    else if (bmi < 25)
-        return "Normal weight";
-    else if (bmi < 30)
-        return "Overweight";
-    else
-        return "Obese";
-}
 
  public void setId(int id) {
      this.id = id;
