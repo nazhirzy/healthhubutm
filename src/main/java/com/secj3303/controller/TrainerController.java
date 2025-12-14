@@ -22,38 +22,32 @@ public class TrainerController {
     private FitnessPlanDAO fitnessPlanDAO;
 
     @Autowired
-    private PersonDao personDAO; // Assuming this DAO can fetch members
+    private PersonDao personDAO; 
 
-    // --- Role Check Method ---
     private boolean isTrainer(HttpSession session) {
         String role = (String) session.getAttribute("role");
         return "trainer".equals(role);
     }
     
-    // --- Trainer Dashboard ---
     @GetMapping("/dashboard")
     public String trainerDashboard(HttpSession session) {
         if (!isTrainer(session)) {
-            return "redirect:/login"; // Redirect if not logged in as a trainer
+            return "redirect:/login";
         }
-        return "trainer/trainer-dashboard"; // trainer/trainer-dashboard.html
+        return "trainer/trainer-dashboard";
     }
 
-    // -------------------------------------------------------------------
-    // --- Fitness Plan Management (CRUD) ---
-    // -------------------------------------------------------------------
 
     @GetMapping("/plans")
     public String listPlans(HttpSession session, Model model) {
         if (!isTrainer(session)) return "redirect:/login";
 
-        // Get the current trainer's ID from session (assuming Person object is stored)
         Person currentTrainer = (Person) session.getAttribute("loggedInUser");
         if (currentTrainer == null) return "redirect:/login";
         
         List<FitnessPlan> plans = fitnessPlanDAO.findPlansByTrainerId(currentTrainer.getId());
         model.addAttribute("plans", plans);
-        return "trainer/plan-list"; // trainer/plan-list.html
+        return "trainer/plan-list"; 
     }
 
     @GetMapping("/plans/showFormForAdd")
@@ -61,7 +55,7 @@ public class TrainerController {
         if (!isTrainer(session)) return "redirect:/login";
 
         model.addAttribute("plan", new FitnessPlan());
-        return "trainer/plan-form"; // trainer/plan-form.html
+        return "trainer/plan-form";
     }
 
     @GetMapping("/plans/showFormForUpdate")
@@ -70,7 +64,7 @@ public class TrainerController {
 
         FitnessPlan plan = fitnessPlanDAO.findById(id);
         model.addAttribute("plan", plan);
-        return "trainer/plan-form"; // Reusing the form
+        return "trainer/plan-form";
     }
 
     @PostMapping("/plans/save")
@@ -80,7 +74,6 @@ public class TrainerController {
         Person currentTrainer = (Person) session.getAttribute("loggedInUser");
         if (currentTrainer == null) return "redirect:/login";
 
-        // Set the trainer for the plan
         plan.setTrainer(currentTrainer); 
         fitnessPlanDAO.save(plan);
         redirectAttributes.addFlashAttribute("message", "Fitness Plan saved successfully!");
@@ -96,24 +89,19 @@ public class TrainerController {
         return "redirect:/trainer/plans";
     }
 
-    // -------------------------------------------------------------------
-    // --- Assign Plan to Members (Simplified view for assignment) ---
-    // -------------------------------------------------------------------
-
     @GetMapping("/assign-plan")
     public String showAssignPlanForm(HttpSession session, Model model) {
         if (!isTrainer(session)) return "redirect:/login";
 
-        // Fetch all members (Assuming a method in PersonDAO: findAllMembers())
         List<Person> members = personDAO.findAllMembers();
-        // Fetch all plans created by this trainer
+
         Person currentTrainer = (Person) session.getAttribute("loggedInUser");
         List<FitnessPlan> plans = fitnessPlanDAO.findPlansByTrainerId(currentTrainer.getId()); 
 
         model.addAttribute("members", members);
         model.addAttribute("plans", plans);
-        // Note: For actual assignment, you would need an intermediary entity (e.g., MemberPlanAssignment)
-        return "trainer/assign-plan-form"; // trainer/assign-plan-form.html
+
+        return "trainer/assign-plan-form";
     }
 
     @PostMapping("/assign-plan")
@@ -121,17 +109,11 @@ public class TrainerController {
                              @RequestParam("planId") int planId, 
                              RedirectAttributes redirectAttributes) {
         
-        // This is where you would implement the logic to save the assignment
-        // E.g., memberPlanAssignmentDAO.saveAssignment(memberId, planId);
-        
-        // Simulating success:
+
         redirectAttributes.addFlashAttribute("message", "Plan assigned successfully!");
         return "redirect:/trainer/dashboard";
     }
 
-    // -------------------------------------------------------------------
-    // --- Schedule Sessions (Simplified) ---
-    // -------------------------------------------------------------------
-    // ... Implement similar CRUD methods for Session using a SessionDAO ...
+
 
 }
