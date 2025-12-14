@@ -10,14 +10,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-
+// testing
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
     @Autowired
     private ProgramDao programDAO;
-    
+
     private boolean isAdmin(HttpSession session) {
         String role = (String) session.getAttribute("role");
         return "admin".equals(role);
