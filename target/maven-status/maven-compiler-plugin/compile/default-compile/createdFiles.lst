@@ -1,4 +1,3 @@
-com\secj3303\controller\AdminController.class
 com\secj3303\model\Bmi.class
 com\secj3303\dao\FitnessPlanDAO.class
 com\secj3303\model\FitnessPlan.class
