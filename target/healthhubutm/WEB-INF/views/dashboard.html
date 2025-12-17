@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>HealthHub@UTM - Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .dashboard-container { max-width: 800px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; }
+        .menu-list { list-style: none; padding: 0; }
+        .menu-list li { margin-bottom: 10px; padding: 10px; background-color: #f4f4f4; border-left: 5px solid #007bff; }
+        .role-badge { display: inline-block; padding: 5px 10px; background-color: green; color: white; border-radius: 5px; margin-left: 10px;}
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h2>Welcome to HealthHub@UTM Dashboard</h2>
+
+    <div>
+        <p>
+            You are logged in as: 
+            <strong><span sec:authentication="name">Guest</span></strong>
+        </p>
+        <p>
+            Your roles:
+            <span sec:authentication="authorities">ROLE_GUEST</span>
+        </p>
+    </div>
+
+    <hr/>
+
+    <h3>Available Features</h3>
+    <ul class="menu-list">
+        
+        <li>
+            <a th:href="@{/program/list}">View All Programs (General Access)</a>
+        </li>
+        
+        <li sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/admin/manage-users}">Manage System Users &amp; Roles</a>
+            <span class="role-badge">ADMIN ONLY</span>
+        </li>
+        
+        <li sec:authorize="hasRole('MEMBER')">
+            <a th:href="@{/member/enrollment}">View My Program Enrollment</a>
+            <span class="role-badge">MEMBER</span>
+        </li>
+        
+        <li sec:authorize="hasRole('TRAINER')">
+            <a th:href="@{/trainer/schedule}">Manage Training Schedule</a>
+            <span class="role-badge">TRAINER ONLY</span>
+        </li>
+
+    </ul>
+
+    <hr/>
+
+    <form th:action="@{/logout}" method="POST">
+        <button type="submit">Logout</button>
+    </form>
+    
+</div>
+
+</body>
+</html>

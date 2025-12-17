@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/resources/css/style.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div> 
+
+    <div class="container">
+        <h2>Welcome, Administrator!</h2>
+
+        <p th:if="${message}" class="success-message" th:text="${message}"></p>
+
+        <div class="dashboard-actions">
+            <h3>Manage Programs</h3>
+            <p>Create, view, edit, and delete fitness programs.</p>
+            <a th:href="@{/admin/programs}" class="btn">Manage Programs</a>
+        </div>
+        
+        <div class="dashboard-actions">
+            <h3>System Reports</h3>
+            <p>View enrollment summaries and system usage statistics.</p>
+            <a th:href="@{/admin/reports}" class="btn">View Reports</a>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>
