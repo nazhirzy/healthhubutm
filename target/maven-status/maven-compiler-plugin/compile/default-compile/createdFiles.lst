@@ -4,6 +4,7 @@ com\secj3303\dao\FitnessPlanDAO.class
 com\secj3303\model\FitnessPlan.class
 com\secj3303\dao\BmiDao.class
 com\secj3303\dao\ProgramDaoHibernate.class
+com\secj3303\security\SecurityConfig.class
 com\secj3303\dao\EnrollmentDao.class
 com\secj3303\dao\ProgramDao.class
 com\secj3303\dao\PersonDao.class
@@ -13,6 +14,7 @@ com\secj3303\model\Program.class
 com\secj3303\dao\FitnessPlanDAOHibernate.class
 com\secj3303\controller\TrainerController.class
 com\secj3303\model\Enrollment.class
+com\secj3303\controller\DashBoardController.class
 com\secj3303\dao\EnrollmentDaoHibernate.class
 com\secj3303\controller\LoginController.class
 com\secj3303\controller\ProgramController.class
