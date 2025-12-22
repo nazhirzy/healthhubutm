@@ -1,11 +1,10 @@
 C:\Internet Programming\Project\healthhubutm\src\main\java\com\secj3303\controller\RegisterController.java
 C:\Internet Programming\Project\healthhubutm\src\main\java\com\secj3303\model\Enrollment.java
 C:\Internet Programming\Project\healthhubutm\src\main\java\com\secj3303\dao\ProgramDaoHibernate.java
+C:\Internet Programming\Project\healthhubutm\src\main\java\com\secj3303\controller\DashboardController.java
 C:\Internet Programming\Project\healthhubutm\src\main\java\com\secj3303\dao\PersonDaoHibernate.java
 C:\Internet Programming\Project\healthhubutm\src\main\java\com\secj3303\controller\LoginController.java
 C:\Internet Programming\Project\healthhubutm\src\main\java\com\secj3303\controller\MemberController.java
-C:\Internet Programming\Project\healthhubutm\src\main\java\com\secj3303\model\Session.java
-C:\Internet Programming\Project\healthhubutm\src\main\java\com\secj3303\model\FitnessPlan.java
 C:\Internet Programming\Project\healthhubutm\src\main\java\com\secj3303\controller\AdminController.java
 C:\Internet Programming\Project\healthhubutm\src\main\java\com\secj3303\dao\BmiDaoHibernate.java
 C:\Internet Programming\Project\healthhubutm\src\main\java\com\secj3303\controller\TrainerController.java
@@ -18,3 +17,4 @@ C:\Internet Programming\Project\healthhubutm\src\main\java\com\secj3303\dao\Pers
 C:\Internet Programming\Project\healthhubutm\src\main\java\com\secj3303\model\Bmi.java
 C:\Internet Programming\Project\healthhubutm\src\main\java\com\secj3303\dao\ProgramDao.java
 C:\Internet Programming\Project\healthhubutm\src\main\java\com\secj3303\dao\BmiDao.java
+C:\Internet Programming\Project\healthhubutm\src\main\java\com\secj3303\security\SecurityConfig.java

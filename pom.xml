@@ -15,7 +15,7 @@
 
   <properties>
     <!-- force all Spring modules to use same version -->
-    <spring.version>5.3.39</spring.version>
+    <spring.version>5.3.30</spring.version>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -114,12 +114,12 @@
 <dependency>
   <groupId>org.thymeleaf</groupId>
   <artifactId>thymeleaf</artifactId>
-  <version>3.1.1.RELEASE</version>
+  <version>3.0.15.RELEASE</version>
 </dependency>
 <dependency>
   <groupId>org.thymeleaf</groupId>
   <artifactId>thymeleaf-spring5</artifactId>
-  <version>3.1.1.RELEASE</version>
+  <version>3.0.15.RELEASE</version>
 </dependency>
 
  <dependency>
@@ -169,7 +169,25 @@
         <version>2.2</version>
     </dependency>
 
+    <!-- Spring Security -->
+<dependency>
+  <groupId>org.springframework.security</groupId>
+  <artifactId>spring-security-web</artifactId>
+  <version>5.8.12</version>
+</dependency>
 
+<dependency>
+  <groupId>org.springframework.security</groupId>
+  <artifactId>spring-security-config</artifactId>
+  <version>5.8.12</version>
+</dependency>
+
+<!-- Thymeleaf Security Dialect -->
+<dependency>
+  <groupId>org.thymeleaf.extras</groupId>
+  <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+  <version>3.0.4.RELEASE</version>
+</dependency>
 
   </dependencies>
 
